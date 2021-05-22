@@ -8,6 +8,7 @@ import Header from '../../components/Header';
 import Content from '../../components/Content';
 
 import { Container, CSSDetails } from './styles';
+import "react-circular-progressbar/dist/styles.css";
 
 function Details() {
   const [currentMovie, setCurrentMovie] = useState(JSON.parse(localStorage.getItem("currentMovie")))
@@ -40,32 +41,35 @@ function Details() {
             <img src={`http://image.tmdb.org/t/p/w185${currentMovie.poster_path}`} alt="Imagem" />
           </div>
           <div className="details-movie">
-            <h1>{currentMovie.title} ({moment(currentMovie.release_date).year()})</h1>
-            <span>
+            <h1>{currentMovie.title} <span className="year">({moment(currentMovie.release_date).year()})</span></h1>
+            <span className="genres">
               {moment(currentMovie.release_date).format('DD/MM/YYYY')} ({currentMovie.original_language.toUpperCase()}) -
               {genres.map((genre, index) => (
-                <span key={genre.id}> {index === (genres.length - 1) ? genre.name : ` ${genre.name}, `} </span>
+                <span key={genre.id} className="genres"> {index === (genres.length - 1) ? genre.name : ` ${genre.name}, `} </span>
               ) )}
             </span>
-            <h3>Overview:</h3>
-            <span>{currentMovie.overview}</span>
-
-            <div className="circle-progress" style={{ width: 100, height: 100, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <CircularProgressbar
-                value={currentMovie.vote_average}
-                text={`${(currentMovie.vote_average).toFixed(1)}`}
-                background
-                maxValue="10"
-                backgroundPadding={6}
-                styles={buildStyles({
-                  backgroundColor: "#3e98c7",
-                  textColor: "#fff",
-                  pathColor: "#fff",
-                  textSize: "20px",
-                  trailColor: "transparent"
-                })}
-                />
+            <div className="infos">
+              <div className="circle-progress">
+                <CircularProgressbar
+                  value={currentMovie.vote_average}
+                  text={`${(currentMovie.vote_average).toFixed(1)}`}
+                  background
+                  className="progress"
+                  maxValue="10"
+                  backgroundPadding={6}
+                  styles={buildStyles({
+                    backgroundColor: "#081c22",
+                    textColor: "#fff",
+                    trailColor: "#204529",
+                    pathColor: "#22d079",
+                    textSize: "24px",
+                  })}
+                  />
+                  <strong>Avaliação dos usuários</strong>
+              </div>
             </div>
+            <h3>Overview</h3>
+            <span>{currentMovie.overview}</span>
           </div>
         </CSSDetails>
       </Content>
