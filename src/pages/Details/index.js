@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-// import { IoArrowDownCircle } from 'react-icons/io5';
+import { IoArrowBackCircle } from 'react-icons/io5';
 import api from '../../services/api';
 
 import Header from '../../components/Header';
@@ -30,13 +31,19 @@ function Details() {
     loadData()
   }, [])
 
-  console.log(currentMovie, genres)
+  // console.log(currentMovie, genres)
 
   return (
     <Container>
       <Header />
       <Content>
-        <CSSDetails>
+        <CSSDetails imgBg={`http://image.tmdb.org/t/p/w185${currentMovie.backdrop_path}`}>
+          <div className="btn-back">
+            <Link to="/">
+              <IoArrowBackCircle size={30}/>
+              <span>Voltar ao inicio</span>
+            </Link>
+          </div>
           <div className="thumbnail">
             <img src={`http://image.tmdb.org/t/p/w185${currentMovie.poster_path}`} alt="Imagem" />
           </div>
