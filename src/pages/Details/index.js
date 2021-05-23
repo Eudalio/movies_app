@@ -3,6 +3,8 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { IoArrowBackCircle } from 'react-icons/io5';
+import { connect } from 'react-redux';
+
 import api from '../../services/api';
 
 import Header from '../../components/Header';
@@ -11,9 +13,9 @@ import Content from '../../components/Content';
 import { Container, CSSDetails } from './styles';
 import "react-circular-progressbar/dist/styles.css";
 
-function Details() {
-  const [currentMovie, setCurrentMovie] = useState(JSON.parse(localStorage.getItem("currentMovie")))
+function Details(props) {
   const [genres, setGenres] = useState([])
+  const { currentMovie } = props
 
   useEffect(() => {
     async function loadData() {
@@ -22,16 +24,14 @@ function Details() {
           const allGenres = response.data.genres;
           let genres = []
           currentMovie.genre_ids.forEach(genreId => {
-            genres.push(allGenres.filter(item => item.id === genreId)[0])
+            genres.push(allGenres.find(item => item.id === genreId))
           });
           setGenres(genres)
         })
         .catch(err => console.log(err))
     }
     loadData()
-  }, [])
-
-  // console.log(currentMovie, genres)
+  }, [currentMovie.genre_ids])
 
   return (
     <Container>
@@ -52,7 +52,9 @@ function Details() {
             <span className="genres">
               {moment(currentMovie.release_date).format('DD/MM/YYYY')} ({currentMovie.original_language.toUpperCase()}) -
               {genres.map((genre, index) => (
-                <span key={genre.id} className="genres"> {index === (genres.length - 1) ? genre.name : ` ${genre.name}, `} </span>
+                <span key={genre.id} className="genres">
+                  {index === (genres.length - 1) ? genre.name : ` ${genre.name}, `}
+                </span>
               ) )}
             </span>
             <div className="infos">
@@ -84,4 +86,10 @@ function Details() {
   );
 }
 
-export default Details;
+function mapStateToProps(state) {
+  return {
+    currentMovie: state.movies.currentMovie,
+  };
+}
+
+export default connect(mapStateToProps)(Details);

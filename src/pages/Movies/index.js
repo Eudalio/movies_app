@@ -1,41 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-// import { IoArrowDownCircle } from 'react-icons/io5';
-import api from '../../services/api';
+import { connect } from 'react-redux';
 
 import Header from '../../components/Header';
 import Content from '../../components/Content';
 import CardList from '../../components/CardList';
 import Card from '../../components/Card';
 
+import { fetchMoreMovies } from '../../store/actions/movies';
+
 import { Container } from './styles';
 
-function Movies() {
-  const [movies, setMovies] = useState([])
-  const [page, setPage] = useState(1)
-
-  
-  useEffect(() => {
-    async function loadData() {
-      await api.get(`/movie/popular`, {
-        params: {
-          page: page 
-        }
-      })
-        .then(response => {
-          console.log(movies, response.data.results, page)
-          setMovies([...movies, ...response.data.results])
-        })
-        .catch(err => console.log(err))
-    }
-    loadData()
-  }, [page])
-  
-
-  const handleFetchMore = () => {
-    let newPage = page
-    setPage(newPage += 1)
-  }
+function Movies(props) {
+  const { page, movies } = props;
 
   return (
     <Container>
@@ -43,10 +20,10 @@ function Movies() {
       <Content>
         <InfiniteScroll
           dataLength={movies.length}
-          next={handleFetchMore}
+          next={() => props.fetchMoreMovies(page)}
           hasMore={true}
           loader={<h4>Fetching more movies...</h4>}
-          scrollThreshold="50px">
+          scrollThreshold="0px">
           <CardList>
             {movies.map(movie => (
               <Card key={Math.random()} value={movie} />
@@ -58,4 +35,23 @@ function Movies() {
   );
 }
 
-export default Movies;
+function mapStateToProps(state) {
+  return {
+    page: state.movies.page,
+    movies: state.movies.movies,
+  };
+}
+
+function mapDispatchToProp(dispatch) {
+  return {
+    fetchMoreMovies(page) {
+      const action = fetchMoreMovies(page += 1);
+      dispatch(action);
+    },
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProp
+)(Movies);

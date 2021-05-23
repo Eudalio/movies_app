@@ -1,16 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { setCurrentMovie } from '../../store/actions/movies';
 
 import { CSSCard } from './styles';
 
-function Card({value: item}) {
+function Card(props) {
     return (
     <CSSCard>
-      <Link to="/details" onClick={() => localStorage.setItem("currentMovie", JSON.stringify(item))}>
-        <img src={`http://image.tmdb.org/t/p/w185${item.poster_path}`} alt="Imagem" />
+      <Link to="/details" onClick={() => props.setCurrentMovie(props.value)}>
+        <img src={`http://image.tmdb.org/t/p/w185${props.value.poster_path}`} alt="Imagem" />
       </Link>
     </CSSCard>
   );
 }
 
-export default Card;
+function mapDispatchToProp(dispatch) {
+  return {
+    setCurrentMovie(movie) {
+      const action = setCurrentMovie(movie);
+      dispatch(action);
+    },
+  };
+}
+
+export default connect(() => {},mapDispatchToProp)(Card);
