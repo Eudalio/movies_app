@@ -37,7 +37,7 @@ function Details(props) {
     <Container>
       <Header />
       <Content>
-        <CSSDetails imgBg={`http://image.tmdb.org/t/p/w185${currentMovie.backdrop_path}`}>
+        <CSSDetails imgBg={`http://image.tmdb.org/t/p/w500${currentMovie.backdrop_path}`}>
           <div className="btn-back">
             <Link to="/">
               <IoArrowBackCircle size={30}/>
@@ -45,7 +45,7 @@ function Details(props) {
             </Link>
           </div>
           <div className="thumbnail">
-            <img src={`http://image.tmdb.org/t/p/w185${currentMovie.poster_path}`} alt="Imagem" />
+            <img src={`http://image.tmdb.org/t/p/w500${currentMovie.poster_path}`} alt="Imagem" />
           </div>
           <div className="details-movie">
             <h1>{currentMovie.title} <span className="year">({moment(currentMovie.release_date).year()})</span></h1>

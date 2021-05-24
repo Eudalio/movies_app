@@ -10,10 +10,16 @@ function Card(props) {
     return (
     <CSSCard>
       <Link to="/details" onClick={() => props.setCurrentMovie(props.value)}>
-        <img src={`http://image.tmdb.org/t/p/w185${props.value.poster_path}`} alt="Imagem" />
+        <img src={`http://image.tmdb.org/t/p/w500${props.value.poster_path}`} alt={`${props.value.title}`} />
       </Link>
     </CSSCard>
   );
+}
+
+function mapStateToProps(state) {
+  return {
+    state: state.movies,
+  };
 }
 
 function mapDispatchToProp(dispatch) {
@@ -25,4 +31,4 @@ function mapDispatchToProp(dispatch) {
   };
 }
 
-export default connect(() => {},mapDispatchToProp)(Card);
+export default connect(mapStateToProps, mapDispatchToProp)(Card);

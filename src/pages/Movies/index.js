@@ -12,7 +12,7 @@ import { fetchMoreMovies } from '../../store/actions/movies';
 import { Container } from './styles';
 
 function Movies(props) {
-  const { page, movies } = props;
+  const { page, movies, search } = props;
 
   return (
     <Container>
@@ -20,7 +20,7 @@ function Movies(props) {
       <Content>
         <InfiniteScroll
           dataLength={movies.length}
-          next={() => props.fetchMoreMovies(page)}
+          next={() => props.fetchMoreMovies(page, search)}
           hasMore={true}
           loader={<h4>Fetching more movies...</h4>}
           scrollThreshold="0px">
@@ -38,14 +38,15 @@ function Movies(props) {
 function mapStateToProps(state) {
   return {
     page: state.movies.page,
+    search: state.movies.search,
     movies: state.movies.movies,
   };
 }
 
 function mapDispatchToProp(dispatch) {
   return {
-    fetchMoreMovies(page) {
-      const action = fetchMoreMovies(page += 1);
+    fetchMoreMovies(page, search) {
+      const action = fetchMoreMovies(page += 1, search);
       dispatch(action);
     },
   };

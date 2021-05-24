@@ -99,7 +99,7 @@ export const CSSDetails = styled.div`
     background-image: url(${props => props.imgBg});
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.8;
+    opacity: 0.7;
     position: absolute;
     z-index: -1;
     top: 0;
