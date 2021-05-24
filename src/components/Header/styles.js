@@ -14,4 +14,13 @@ export const CSSHeader = styled.header`
     max-height: 75%;
     max-width: 150px;
   }
+
+  input {
+    width: 200px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    font-size: 16px;
+  }
 `;
