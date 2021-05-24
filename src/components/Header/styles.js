@@ -10,11 +10,6 @@ export const CSSHeader = styled.header`
   color: #fff;
   padding: 0px 20px;
 
-  img {
-    max-height: 75%;
-    max-width: 150px;
-  }
-
   input {
     width: 200px;
     height: 30px;

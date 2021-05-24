@@ -23,6 +23,17 @@ export const CSSDetails = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
   color: #def;
 
+  @media(max-width: 990px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'back'
+      'details';
+
+    .thumbnail {
+      display: none;
+    }
+  }
+
   .btn-back {
     grid-area: back;
 

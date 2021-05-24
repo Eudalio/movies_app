@@ -10,7 +10,7 @@ function Card(props) {
     return (
     <CSSCard>
       <Link to="/details" onClick={() => props.setCurrentMovie(props.value)}>
-        <img src={`http://image.tmdb.org/t/p/w500${props.value.poster_path}`} alt={`${props.value.title}`} />
+        <img src={props.value.poster_path ? `http://image.tmdb.org/t/p/w500${props.value.poster_path}` : 'https://fakeimg.pl/500x500/?text=Not%20Found'} alt={`${props.value.title}`} />
       </Link>
     </CSSCard>
   );

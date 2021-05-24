@@ -37,7 +37,7 @@ function Details(props) {
     <Container>
       <Header />
       <Content>
-        <CSSDetails imgBg={`http://image.tmdb.org/t/p/w500${currentMovie.backdrop_path}`}>
+        <CSSDetails imgBg={currentMovie.backdrop_path ? `http://image.tmdb.org/t/p/w500${currentMovie.backdrop_path}` : 'https://fakeimg.pl/500x300/?text=Not%20Found'}>
           <div className="btn-back">
             <Link to="/">
               <IoArrowBackCircle size={30}/>
@@ -45,7 +45,7 @@ function Details(props) {
             </Link>
           </div>
           <div className="thumbnail">
-            <img src={`http://image.tmdb.org/t/p/w500${currentMovie.poster_path}`} alt="Imagem" />
+            <img src={currentMovie.poster_path ? `http://image.tmdb.org/t/p/w500${currentMovie.poster_path}` : 'https://fakeimg.pl/500x500/?text=Not%20Found'} alt="Imagem" />
           </div>
           <div className="details-movie">
             <h1>{currentMovie.title} <span className="year">({moment(currentMovie.release_date).year()})</span></h1>
@@ -77,7 +77,7 @@ function Details(props) {
                   <strong>Avaliação dos usuários</strong>
               </div>
             </div>
-            <h3>Overview</h3>
+            <h3>Resumo</h3>
             <span>{currentMovie.overview}</span>
           </div>
         </CSSDetails>

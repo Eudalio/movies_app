@@ -15,7 +15,7 @@ function Header(props) {
     } else {
       props.fetchMovies()
     }
-  }, [debouncedSearch])
+  }, [debouncedSearch, props])
 
   return (
       <CSSHeader>
